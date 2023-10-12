@@ -56,6 +56,16 @@ class BaseManager:
         result = list(map(list, curr.fetchall()))
         return result
 
+    def delete(self, params, table):
+        if params:
+            conn = self._get_connection()
+            curr = conn.cursor()
+            # Соединяю нужные столбцы, чтоб сделать запрос к бд
+            params = ', '.join(params) if params else '*'
+            curr.execute(f"delete from {table} where {params}")
+        else:
+            assert ValueError('Empty request')
+
 
 class MetaModel(type):
     manager_class = BaseManager
