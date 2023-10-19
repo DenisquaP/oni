@@ -7,11 +7,11 @@ class Singleton(object):
 
     def __new__(cls, *args, **kwargs):
         if not isinstance(cls._instance, cls):
-            cls._instance = object.__new__(cls, *args, **kwargs)
+            cls._instance = super().__new__(cls)
         return cls._instance
 
 
-class BaseManager:
+class ORM(Singleton):
     '''Selfmade an orm class'''
     __CREATED = []
 
@@ -151,9 +151,3 @@ DB_SETTINGS = {
     'host': 'localhost',
     'port': 5432
 }
-
-a = BaseManager(DB_SETTINGS)
-# print(a.create_tables({'table_name': 'test_table', 'variables': ['id', 'name', 'age'], 'desc': ['serial', 'varchar (128)', 'integer']}))
-# print(a.select([], table='test_table'))
-a.delete({'id': 4}, table='ks')
-print(a.insert({'name': 'Anna', 'age': '22'}, table='test_table'))
