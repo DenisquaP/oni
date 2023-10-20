@@ -52,7 +52,7 @@ class ORM(Singleton):
         """
         table_name = structure['table_name']
         if table_name in self.__CREATED:
-            raise ValueError('Table already exists')
+            return
         elif not structure:
             raise ValueError('Empty structure')
         with self._get_connection() as conn:
@@ -91,7 +91,7 @@ class ORM(Singleton):
             params (dict): A list of keys and values that you want
             to insert into a table
             table (str): A name of table
-        """        
+        """
         with self._get_connection() as conn:
             with conn.cursor() as curr:
                 dict_keys = ', '.join(params.keys())
@@ -142,12 +142,3 @@ class ORM(Singleton):
                     curr.execute(f"delete from {table} where {query}")
         else:
             raise ValueError('Empty request')
-
-
-DB_SETTINGS = {
-    'database': 'postgres',
-    'user': 'postgres',
-    'password': 'postgres',
-    'host': 'localhost',
-    'port': 5432
-}
