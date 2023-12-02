@@ -1,4 +1,4 @@
-# My own web framework and orm written in python
+# My own web framework and orm written by python
 
 Technologies used:
 
